@@ -4,15 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    
     <!-- leaflet css -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
      
+    <!-- Tailwind CSS output file -->
     <link rel="stylesheet" href="./main.css">
 
     <!-- Leaflet MarkerCluster CSS -->
-    <!-- <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster/dist/MarkerCluster.css" />
-    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster/dist/MarkerCluster.Default.css" /> -->
-
     <link rel="stylesheet" href="./dist/MarkerCluster.css">
     <link rel="stylesheet" href="./dist/MarkerCluster.Default.css">
 
@@ -23,14 +22,14 @@
             box-sizing: border-box;
         }
         /* #map{
-            height: 100vh;
-            width: 100%;
+            height: cal(100vh-8rem);
+          
             
-        } */
+        }  */
     </style>
 </head>
 <body>
-    <div class="flex flex-col">
+    <div class="flex flex-col h-screen">
       <!-- header -->
        <header class="bg-black shadow-lg px-2 pt-1 sticky top-0 border-b w-full h-14 z-20 gap-1 ">
 
@@ -45,13 +44,37 @@
         </div>
 
        </header>
+
       <!-- map-area -->
       <div class="px-3 py-3 rounded-md bg-gray-900 flex-1">
 
-        <div id="map" class="h-[calc(100vh-3.5rem)] w-full rounded-md z-10"></div>
+        <div id="map" class="h-[calc(100vh-5rem)] w-full rounded-md z-10"></div>
       
     </div>
-   
+
+    <!-- DaisyUI Drawer Component -->
+    <div class="drawer drawer-end z-50">
+        <!-- Checkbox for drawer toggle -->
+        <input id="my-drawer-4" type="checkbox" class="drawer-toggle" />
+    
+        <!-- Drawer content (hidden by default) -->
+        <div class="drawer-content">
+            
+            <!-- remain hidden -->
+        </div>
+    
+        <!-- Drawer side (visible when toggled) -->
+        <div class="drawer-side">
+            <!-- Overlay to close the drawer -->
+            <label for="my-drawer-4" aria-label="close sidebar" class="drawer-overlay"></label>
+    
+            <!-- Drawer content -->
+            <ul class="menu bg-base-200 text-base-content min-h-full w-80 p-4">
+                <li><a>Sidebar Item 1</a></li>
+                <li><a>Sidebar Item 2</a></li>
+            </ul>
+        </div>
+    </div>
 
     <!-- leaflet js -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
@@ -70,26 +93,11 @@
     <!-- map js -->
     <script src="/js/map.js"></script>
 
-    <!-- <script>
-        fetch("./data/raster_tile.tif")
-                .then(response => response.arrayBuffer())
-                .then(arrayBuffer => {
-                    parseGeoraster(arrayBuffer).then(georaster => {
-                        // console.log("georaster:", georaster);
+    <!-- georaster js -->
+    <script src="/js/georaster.js"></script>
 
-                        var layer = new GeoRasterLayer({
-                            georaster: georaster,
-                            opacity: 0.7,
-                            //pixelValuesToColorFn: values => values <50 ? 'red' : 'blue',
-                            resolution: 256 // optional parameter for adjusting display resolution
-                        });
-                        layer.addTo(map);
-
-                        map.fitBounds(layer.getBounds());
-
-                    });
-                });
-    </script> -->
-     <script src="/js/georaster.js"></script>
+    <script>
+        
+    </script>
 </body>
 </html>

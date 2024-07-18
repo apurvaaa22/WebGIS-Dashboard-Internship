@@ -105,44 +105,9 @@ L.geoJSON(maharashtraWellsGeoJSON, {
 // Add marker clustering to the map
 map.addLayer(markers);
 
-// Function to create popup content for a feature
-function createPopupContent(feature, layer) {
-    let popupContent = "";
-    if (feature.properties) {
-        for (let property in feature.properties) {
-            popupContent +=
-                "<b>" + property + "</b>: " + feature.properties[property] + "<br />";
-        }
-    }
-    layer.bindPopup(popupContent);
-}
-
-function style_Maharashtra_Wells_Jan_2023(feature) {
-  return {
-    opacity: 1,
-    color: "#1affd1",
-    dashArray: "",
-    lineCap: "square",
-    lineJoin: "bevel",
-    weight: 4.0,
-    fillOpacity: 0,
-    interactive: true,
-  };
-}
-
-// Create the geojson layers
-// Maharashtra_Wells_Jan_2023
-let maharashtraWellsGeoJSON_Jan2023= addGeoJsonLayer(
-  maharashtraWellsGeoJSON,
-  style_Maharashtra_Wells_Jan_2023,
-  createPopupContent,
-);
-
-maharashtraWellsGeoJSON_Jan2023.addTo(map);
 
 
-// Fit map bounds 
-map.fitBounds(maharashtraWellsGeoJSON.getBounds());
+
 
 
 
