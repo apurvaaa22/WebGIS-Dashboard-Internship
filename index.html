@@ -99,7 +99,18 @@
     <script src="/js/georaster.js"></script>
 
     <script>
-        
+        document.addEventListener('DOMContentLoaded', function() {
+            var drawerToggle = document.getElementById('my-drawer-4');
+            var drawer = document.querySelector('.drawer');
+
+            drawerToggle.addEventListener('change', function() {
+                if (drawerToggle.checked) {
+                    drawer.classList.add('open');
+                } else {
+                    drawer.classList.remove('open');
+                }
+            });
+        });
     </script>
 </body>
 </html>
