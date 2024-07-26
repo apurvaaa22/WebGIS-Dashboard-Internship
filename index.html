@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    
+
     <!-- leaflet css -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
-     
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+
     <!-- Tailwind CSS output file -->
     <link rel="stylesheet" href="./main.css">
 
@@ -16,11 +18,12 @@
     <link rel="stylesheet" href="./dist/MarkerCluster.Default.css">
 
     <style>
-        *{
+        * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
+
         /* #map{
             height: cal(100vh-8rem);
           
@@ -28,59 +31,93 @@
         }  */
     </style>
 </head>
-<body>
+
+<body class="bg-gray-900">
+
     <div class="flex flex-col h-screen">
-      <!-- header -->
-       <header class="bg-black shadow-lg px-2 pt-1 sticky top-0 border-b w-full h-14 z-20 gap-1 ">
+        <!-- header -->
+        <header class="bg-black shadow-lg px-2 pt-1 sticky top-0 border-b w-full h-14 z-20 gap-1 ">
 
-        <div class="container mx-auto flex items-center justify-between">
-            <div class="flex items-center">
-                <img src="./images/AUMSAT-LOGO-PNG.png" class="h-12" alt="">
+            <div class="container mx-auto flex items-center justify-between">
+                <div class="flex items-center">
+                    <img src="./images/AUMSAT-LOGO-PNG.png" class="h-12" alt="">
+                </div>
+
+                <div class=" sm:block absolute left-1/2 transform -translate-x-1/2">
+                    <h1 class="text-xl font-semibold text-white font-serif md:text-xl">Maharashtra Wells Data 2023</h1>
+                </div>
             </div>
 
-            <div class=" sm:block absolute left-1/2 transform -translate-x-1/2">
-                <h1 class="text-xl font-semibold text-white font-serif md:text-xl">Maharashtra Wells Data 2023</h1>
+        </header>
+
+        <div>
+            <!-- map-area -->
+
+            <div class="px-3 py-3 rounded-md bg-gray-900 flex-1">
+
+                <div id="map" class="h-[calc(100vh-5rem)] w-full rounded-md z-10"></div>
+
             </div>
+
+
+            <!-- DaisyUI Drawer Component -->
+            <div class="drawer drawer-end z-10">
+                <!-- Checkbox for drawer toggle -->
+                <input id="my-drawer-4" type="checkbox" class="drawer-toggle" />
+
+                <!-- Drawer content (hidden by default) -->
+                <div class="drawer-content">
+
+                    <!-- Trigger to open drawer -->
+                    <!-- <label for="my-drawer-4" class="drawer-button btn btn-primary">Open Drawer</label> -->
+                </div>
+
+                <!-- Drawer side (visible when toggled) -->
+                <div class="drawer-side">
+                    <!-- Overlay to close the drawer -->
+                    <label for="my-drawer-4" aria-label="close sidebar"
+                        class="drawer-overlay bg-gray-800 opacity-75"></label>
+
+                    <!-- Drawer content -->
+                    <div class="bg-gray-900 text-white p-5 w-1/2 h-full  ">
+                        <!-- Site Name, District, and State Name at the top of the drawer -->
+                        <div class="bg-gray-800 m-3  p-2 rounded-xl shadow-black">
+                            <h2 id="site-name" class="text-2xl font-semibold mb-2">Site Name: </h2>
+
+                            <div class="flex flex-row gap-3">
+                                <h3 id="district-name" class="text-xl mb-2">District: </h3>
+                                <h3 id="state-name" class="text-xl mb-4">State Name: </h3>
+                            </div>
+                        </div>
+
+                        <!-- lat long -->
+                        <div class="flex flex-col items-end mr-5">
+                            <h3 id="latitue">LATITUDE:</h3>
+                            <h3 id="longitude">LONGITUDE:</h3>
+                        </div>
+
+                        <ul class="menu space-y-2 mt-2">
+                            <!-- Dynamic content will be populated here -->
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+
         </div>
 
-       </header>
 
-      <!-- map-area -->
-      <div class="px-3 py-3 rounded-md bg-gray-900 flex-1">
-
-        <div id="map" class="h-[calc(100vh-5rem)] w-full rounded-md z-10"></div>
-      
     </div>
 
-    <!-- DaisyUI Drawer Component -->
-    <div class="drawer drawer-end z-50">
-        <!-- Checkbox for drawer toggle -->
-        <input id="my-drawer-4" type="checkbox" class="drawer-toggle" />
-    
-        <!-- Drawer content (hidden by default) -->
-        <div class="drawer-content">
-            
-           <!-- Trigger to open drawer -->
-        <label for="my-drawer-4" class="drawer-button btn btn-primary">Open Drawer</label>
-            
-        </div>
-    
-        <!-- Drawer side (visible when toggled) -->
-        <div class="drawer-side">
-            <!-- Overlay to close the drawer -->
-            <label for="my-drawer-4" aria-label="close sidebar" class="drawer-overlay"></label>
-    
-            <!-- Drawer content -->
-            <ul class="menu bg-base-200 text-base-content min-h-full w-80 p-4">
-                <li><a>Sidebar Item 1</a></li>
-                <li><a>Sidebar Item 2</a></li>
-            </ul>
-        </div>
+
+
+
     </div>
 
     <!-- leaflet js -->
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-    
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
 
     <script src="./dist/leaflet.markercluster.js"></script>
 
@@ -98,19 +135,7 @@
     <!-- georaster js -->
     <script src="/js/georaster.js"></script>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            var drawerToggle = document.getElementById('my-drawer-4');
-            var drawer = document.querySelector('.drawer');
 
-            drawerToggle.addEventListener('change', function() {
-                if (drawerToggle.checked) {
-                    drawer.classList.add('open');
-                } else {
-                    drawer.classList.remove('open');
-                }
-            });
-        });
-    </script>
 </body>
+
 </html>
