@@ -1,26 +1,27 @@
-
-// map initialization
+// Map initialization
 var map = L.map('map').setView([19.7515, 75.7139], 6);
 
-// default layer(osm)
+// Default layer (OSM)
 var osm = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-
 });
 osm.addTo(map);
 
-// Fetch the geoJSON data from data folder
-// fetch('data/Maharashtra_Wells_Jan_2023.geojson').then(response => 
-//     response.json()
-// ).then(data => {
-//     // create geojson layer and add to map
-//     L.geoJSON(data).addTo(map);
-// }).catch(error => {
-//     console.error('Error loading GeoJSON data :',error);
-// });
+// Marker clustering
+const markers = L.markerClusterGroup();
 
-// // Add the Geojson data to the map
-// L.geoJSON(maharashtraWellsGeoJSON).addTo(map);
+// Custom icons using SVG files
+const boreWellIcon = L.icon({
+    iconUrl: "https://www.svgrepo.com/show/500043/water-tank.svg",
+    iconSize: [25, 41],
+    iconAnchor: [12, 41]
+});
+
+const dugWellIcon = L.icon({
+    iconUrl: 'https://www.svgrepo.com/show/276095/well.svg',
+    iconSize: [25, 41],
+    iconAnchor: [12, 41]
+});
 
 const geojsonMarkerOption = {
     radius: 8,
@@ -31,85 +32,85 @@ const geojsonMarkerOption = {
     fillOpacity: 0.8
 };
 
+// Function to handle loading GeoJSON data
+function loadGeoJSON() {
+    fetch('data/Maharashtra_Wells_Jan_2023.geojson')
+        .then(response => response.json())
+        .then(data => {
+            L.geoJSON(data, {
+                pointToLayer: function (feature, latlng) {
+                    let icon;
+                    if (feature.properties.SITE_TYPE === 'Bore Well') {
+                        icon = boreWellIcon;
+                    } else if (feature.properties.SITE_TYPE === 'Dug Well') {
+                        icon = dugWellIcon;
+                    } else {
+                        icon = L.divIcon(geojsonMarkerOption);
+                    }
 
-//    //custom icons
-//    const iconOptions = {
-//       iconSize:[25,41],
-//       iconAnchor:[12,41],  
-//    }
+                    // Create the marker
+                    let marker = L.marker(latlng, { icon: icon });
 
-//    const boreWell=L.icon({
-//     ...iconOptions,
-//     iconUrl:'https://tse1.mm.bing.net/th?id=OIP.VQd7A7v1mLHC31bZVMiNvgHaHa&pid=Api&P=0&h=220'
-//    })
+                    // Add a click event listener to the marker
+                    marker.on('click', function () {
+                        // Open the drawer
+                        document.getElementById('my-drawer-4').checked = true;
 
-//    const dugWell=L.icon({
-//     ...iconOptions,
-//     iconUrl:'https://tse4.mm.bing.net/th?id=OIP.YIYFyhzxyIrS4mGGPeX1hAHaHa&pid=Api&P=0&h=220'
-//    })
+                        // Populate the drawer with feature details
+                        populateDrawer(feature.properties);
+                    });
 
-//Marker clustering
-const markers = L.markerClusterGroup();
+                    // Add the marker to the cluster group
+                    return markers.addLayer(marker);
+                }
+            });
 
-// // Loading GeoJSON with custom icons
-// L.geoJSON(maharashtraWellsGeoJSON,{
-//     pointToLayer:function(feature,latlng){
-//         let icon;
-//         if(feature.properties.SITE_TYPE==='Bore Well'){
-//             icon=boreWell;
-//         }
-//         else if(feature.properties.SITE_TYPE==='Dug Well'){
-//             icon=dugWell;
-//         }
-//         else{
-//             icon=L.divIcon(geojsonMarkerOption);
-//         }
+            // Add the marker cluster group to the map
+            map.addLayer(markers);
+        })
+        .catch(error => {
+            console.error('Error loading GeoJSON data:', error);
+        });
+}
 
-//         return markers.addLayer(L.marker(latlng,{icon:icon}));
-//     }
-// }).addTo(map);
+// Function to populate the drawer with feature details
+function populateDrawer(properties) {
+    // Get the drawer content element
+    var drawerContent = document.querySelector('.drawer-side .menu');
 
+    // Clear existing content
+    drawerContent.innerHTML = '';
 
-// Custom icons using SVG files from the marker/svg/ folder
-const boreWellIcon = L.icon({
-    iconUrl: "https://www.svgrepo.com/show/500043/water-tank.svg",
-    iconSize: [25, 41], // size of the icon
-    iconAnchor: [12, 41] // point of the icon which will correspond to marker's location
-});
-
-const dugWellIcon = L.icon({
-    iconUrl: 'https://www.svgrepo.com/show/276095/well.svg',
-    iconSize: [25, 41], // size of the icon
-    iconAnchor: [12, 41] // point of the icon which will correspond to marker's location
-});
-
-// Loading GeoJSON with custom icons
-L.geoJSON(maharashtraWellsGeoJSON, {
-    pointToLayer: function (feature, latlng) {
-        let icon;
-        // Assign the appropriate icon based on the SITE_TYPE property
-        if (feature.properties.SITE_TYPE === 'Bore Well') {
-            icon = boreWellIcon;
-        } else if (feature.properties.SITE_TYPE === 'Dug Well') {
-            icon = dugWellIcon;
-        } else {
-            // Use a default div icon if the SITE_TYPE doesn't match
-            icon = L.divIcon(geojsonMarkerOption);
-        }
-
-        // Add the marker to the marker cluster group
-        return markers.addLayer(L.marker(latlng, { icon: icon }));
+    // Populate with new content
+    for (let key in properties) {
+        let li = document.createElement('li');
+        li.textContent = `${key}: ${properties[key]}`;
+        drawerContent.appendChild(li);
     }
-}).addTo(map);
 
-// Add marker clustering to the map
-map.addLayer(markers);
+    // Populate the site name, district, and state name
+    document.getElementById('state-name').textContent = `State Name: ${properties.STATE_NAME}`;
+    document.getElementById('site-name').textContent = `Site Name: ${properties.SITE_NAME}`;
+    document.getElementById('district-name').textContent = `District: ${properties.DISTRICT_N }`;
 
+    // Populate latitude and longitude
+    document.getElementById('latitue').textContent=`latitude:${properties.LATITUDE}`;
+    document.getElementById('longitude').textContent=`longitude:${properties.LONGITUDE}`;
+}
 
+// Load GeoJSON data
+loadGeoJSON();
 
+// Drawer functionality
+document.addEventListener('DOMContentLoaded', function () {
+    var drawerToggle = document.getElementById('my-drawer-4');
+    var drawer = document.querySelector('.drawer');
 
-
-
-
-
-
+    drawerToggle.addEventListener('change', function () {
+        if (drawerToggle.checked) {
+            drawer.classList.add('open');
+        } else {
+            drawer.classList.remove('open');
+        }
+    });
+});
