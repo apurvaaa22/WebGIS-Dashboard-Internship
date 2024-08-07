@@ -82,20 +82,33 @@ function populateDrawer(properties) {
     drawerContent.innerHTML = '';
 
     // Populate with new content
-    for (let key in properties) {
-        let li = document.createElement('li');
-        li.textContent = `${key}: ${properties[key]}`;
-        drawerContent.appendChild(li);
-    }
+    // for (let key in properties) {
+    //     let li = document.createElement('li');
+    //     li.textContent = `${key}: ${properties[key]}`;
+    //     drawerContent.appendChild(li);
+    // }
 
     // Populate the site name, district, and state name
     document.getElementById('state-name').textContent = `State Name: ${properties.STATE_NAME}`;
     document.getElementById('site-name').textContent = `Site Name: ${properties.SITE_NAME}`;
-    document.getElementById('district-name').textContent = `District: ${properties.DISTRICT_N }`;
+    document.getElementById('district-name').textContent = `District: ${properties.DISTRICT_N}`;
 
     // Populate latitude and longitude
-    document.getElementById('latitue').textContent=`latitude:${properties.LATITUDE}`;
-    document.getElementById('longitude').textContent=`longitude:${properties.LONGITUDE}`;
+    document.getElementById('latitue').textContent = `latitude:${properties.LATITUDE}`;
+    document.getElementById('longitude').textContent = `longitude:${properties.LONGITUDE}`;
+
+    //Populate remaining values
+    document.getElementById('value1').textContent = `${properties.SITE_ID}`;
+    document.getElementById('value2').textContent = `${properties.SITE_TYPE}`;
+    document.getElementById('value3').textContent = `${properties.TAHSIL_NAM}`;
+    document.getElementById('value4').textContent = `${properties.BLOCK_NAME}`;
+    document.getElementById('value5').textContent = `${properties.DEPTH}`;
+    document.getElementById('value6').textContent = `${properties.WLS_DATE}`;
+    document.getElementById('value7').textContent = `${properties.WLS_WTR_LE}`;
+    document.getElementById('value8').textContent = `${properties.WLS_DRY_WE}`;
+    document.getElementById('value9').textContent = `${properties.AQUIFER_TY}`;
+    document.getElementById('value10').textContent = `${properties.SITE_SUB_T}`;
+
 }
 
 // Load GeoJSON data
