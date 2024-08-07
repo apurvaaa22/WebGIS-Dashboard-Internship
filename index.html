@@ -50,61 +50,120 @@
 
         </header>
 
-        <div>
-            <!-- map-area -->
 
-            <div class="px-3 py-3 rounded-md bg-gray-900 flex-1">
+        <!-- map-area -->
 
-                <div id="map" class="h-[calc(100vh-5rem)] w-full rounded-md z-10"></div>
+        <div class="px-3 py-3 rounded-md bg-gray-900 flex-1">
 
+            <div id="map" class="h-[calc(100vh-5rem)] w-full rounded-md z-10"></div>
+
+        </div>
+
+
+        <!-- DaisyUI Drawer Component -->
+        <div class="drawer drawer-end z-10">
+            <!-- Checkbox for drawer toggle -->
+            <input id="my-drawer-4" type="checkbox" class="drawer-toggle" />
+
+            <!-- Drawer content (hidden by default) -->
+            <div class="drawer-content">
+
+                <!-- Trigger to open drawer -->
+                <!-- <label for="my-drawer-4" class="drawer-button btn btn-primary">Open Drawer</label> -->
             </div>
 
+            <!-- Drawer side (visible when toggled) -->
+            <div class="drawer-side">
+                <!-- Overlay to close the drawer -->
+                <label for="my-drawer-4" aria-label="close sidebar"
+                    class="drawer-overlay bg-gray-800 opacity-75"></label>
 
-            <!-- DaisyUI Drawer Component -->
-            <div class="drawer drawer-end z-10">
-                <!-- Checkbox for drawer toggle -->
-                <input id="my-drawer-4" type="checkbox" class="drawer-toggle" />
+                <!-- Drawer content -->
+                <div class="bg-gray-900 text-white p-5 w-full sm:w-3/4 lg:w-1/2 h-full flex flex-col overflow-auto ">
+                    <!-- Site Name, District, and State Name at the top of the drawer -->
+                    <div class="bg-gray-800 mt-12 mr-3 p-2 rounded-xl shadow-black">
+                        <h2 id="site-name" class="text-2xl font-semibold mb-2">Site Name: </h2>
 
-                <!-- Drawer content (hidden by default) -->
-                <div class="drawer-content">
-
-                    <!-- Trigger to open drawer -->
-                    <!-- <label for="my-drawer-4" class="drawer-button btn btn-primary">Open Drawer</label> -->
-                </div>
-
-                <!-- Drawer side (visible when toggled) -->
-                <div class="drawer-side">
-                    <!-- Overlay to close the drawer -->
-                    <label for="my-drawer-4" aria-label="close sidebar"
-                        class="drawer-overlay bg-gray-800 opacity-75"></label>
-
-                    <!-- Drawer content -->
-                    <div class="bg-gray-900 text-white p-5 w-1/2 h-full  ">
-                        <!-- Site Name, District, and State Name at the top of the drawer -->
-                        <div class="bg-gray-800 m-3  p-2 rounded-xl shadow-black">
-                            <h2 id="site-name" class="text-2xl font-semibold mb-2">Site Name: </h2>
-
-                            <div class="flex flex-row gap-3">
-                                <h3 id="district-name" class="text-xl mb-2">District: </h3>
-                                <h3 id="state-name" class="text-xl mb-4">State Name: </h3>
-                            </div>
+                        <div class="flex flex-row gap-3">
+                            <h3 id="district-name" class="text-xl mb-2">District: </h3>
+                            <h3 id="state-name" class="text-xl mb-4">State Name: </h3>
                         </div>
-
-                        <!-- lat long -->
-                        <div class="flex flex-col items-end mr-5">
-                            <h3 id="latitue">LATITUDE:</h3>
-                            <h3 id="longitude">LONGITUDE:</h3>
-                        </div>
-
-                        <ul class="menu space-y-2 mt-2">
-                            <!-- Dynamic content will be populated here -->
-                        </ul>
                     </div>
-                </div>
 
+                    <!-- lat long -->
+                    <div class="flex flex-col items-end mr-5 mt-3">
+                        <h3 id="latitue">LATITUDE:</h3>
+                        <h3 id="longitude">LONGITUDE:</h3>
+                    </div>
+
+                    <!-- Table for displaying remaining properties -->
+                    <div class="mt-6 ml-2 mr-2 ">
+                        <div class="overflow-x-auto">
+                            <table class="table-auto w-full  text-center">
+                                <thead class="bg-gray-700">
+                                    <tr>
+                                        <th class="px-4 py-2">Property</th>
+                                        <th class="px-4 py-2">Value</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="property-table-body">
+                                    <!-- Dynamic rows will be populated here -->
+                                    <!-- Example rows -->
+                                    <tr class="bg-gray-800">
+                                        <td class="border-t border-gray-700 px-4 py-2">SITE_ID</td>
+                                        <td class="border-t border-gray-700 px-4 py-2" id="value1"></td>
+                                    </tr>
+                                    <tr class="bg-gray-800">
+                                        <td class="border-t border-gray-700 px-4 py-2">SITE_TYPE</td>
+                                        <td class="border-t border-gray-700 px-4 py-2" id="value2"></td>
+                                    </tr>
+                                    <tr class="bg-gray-800">
+                                        <td class="border-t border-gray-700 px-4 py-2">TAHSIL_NAME</td>
+                                        <td class="border-t border-gray-700 px-4 py-2" id="value3"></td>
+                                    </tr>
+                                    <tr class="bg-gray-800">
+                                        <td class="border-t border-gray-700 px-4 py-2">BLOCK_NAME</td>
+                                        <td class="border-t border-gray-700 px-4 py-2" id="value4"></td>
+                                    </tr>
+                                    <tr class="bg-gray-800">
+                                        <td class="border-t border-gray-700 px-4 py-2">DEPTH</td>
+                                        <td class="border-t border-gray-700 px-4 py-2" id="value5"></td>
+                                    </tr>
+                                    <tr class="bg-gray-800">
+                                        <td class="border-t border-gray-700 px-4 py-2">WLS_DATE</td>
+                                        <td class="border-t border-gray-700 px-4 py-2" id="value6"></td>
+                                    </tr>
+                                    <tr class="bg-gray-800">
+                                        <td class="border-t border-gray-700 px-4 py-2">WLS_WTR_LE</td>
+                                        <td class="border-t border-gray-700 px-4 py-2" id="value7"></td>
+                                    </tr>
+                                    <tr class="bg-gray-800">
+                                        <td class="border-t border-gray-700 px-4 py-2">WLS_DRY_WE</td>
+                                        <td class="border-t border-gray-700 px-4 py-2" id="value8"></td>
+                                    </tr>
+                                    <tr class="bg-gray-800">
+                                        <td class="border-t border-gray-700 px-4 py-2">AQUIFER_TY</td>
+                                        <td class="border-t border-gray-700 px-4 py-2" id="value9"></td>
+                                    </tr>
+                                    <tr class="bg-gray-800">
+                                        <td class="border-t border-gray-700 px-4 py-2">SITE_SUB_T</td>
+                                        <td class="border-t border-gray-700 px-4 py-2" id="value10"></td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <ul class="menu space-y-2 mt-2">
+                        <!-- Dynamic content will be populated here -->
+                    </ul>
+                </div>
             </div>
 
         </div>
+
+
 
 
     </div>
